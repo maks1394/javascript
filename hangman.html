@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="UTF-8">
+ <title>Hangman</title>
+</head>
+<body>
+ <h1>Привет, мир!</h1>
+ <p>Моя первая веб-страничка.</p>
+ <script>
+ 	var word = ["плюшка","сырник","почтальон","шайба"];
+ 	var alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+ 	var alphabetUp = alphabet.toUpperCase(alphabet);
+ 	var attempts = 10;
+ 	alphabet += alphabetUp;
+ 	var randomWord = word[Math.floor(Math.random()*word.length)];
+ 	alert(randomWord);
+ 	alert(randomWord.length);
+ 	var answerArray = [];
+ 	for (var i=0;i<randomWord.length;i++){
+ 		answerArray[i]= "_";
+ 	}
+ 	//alert(answerArray.join());
+ 	var letter = "";
+ 	var remainingLetters = answerArray.length;
+ 	while (remainingLetters>0){
+ 		alert (answerArray.join(" "));
+ 		letter = prompt("Введите букву");
+ 		letter = letter.toLowerCase();
+ 		if(randomWord.indexOf(letter)===-1){
+ 			--attempts;
+ 			if (attempts===0){
+ 				alert("You Lose");
+ 				break;
+ 			} else{
+ 			alert("attempts left " + attempts);
+ 			}
+ 		}
+ 		if ( (letter.length ===1) && (alphabet.indexOf(letter)>=0) && (answerArray.indexOf(letter)===-1) ){
+ 			for (var j=0;j<answerArray.length;j++){
+ 				if (randomWord[j]===letter){
+ 					answerArray[j]= letter;
+ 					remainingLetters--;
+ 				}
+ 			}
+ 			
+ 		}
+
+ 	}
+ 	if (attempts){
+ 	alert (answerArray.join(" "));
+ 	alert ("Congratulations!");
+ 	}
+ </script>
+</body>
+</html>
