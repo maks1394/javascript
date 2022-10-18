@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="UTF-8">
+ <title>Hangman</title>
+</head>
+<body>
+ <h1>Привет, мир!</h1>
+ <p>Моя первая веб-страничка.</p>
+ <script>
+ 	var pickWord = function (wordArray) {
+ // Возвращает случайно выбранное слово
+ 	return wordArray[Math.floor(Math.random()*wordArray.length)]
+	};
+	var setupAnswerArray = function (word) {
+	 // Возвращает итоговый массив для заданного слова word
+	 var setupAnswerArrayLocal = [];
+	 for (var i =0;i < word.length;i++){
+	 	setupAnswerArrayLocal[i] = "_";
+	 }
+	 return setupAnswerArrayLocal;
+	};
+	var showPlayerProgress = function (answerArray) {
+	 // С помощью alert отображает текущее состояние игры
+	 alert(answerArray.join(" "));
+	};
+	var getGuess = function () {
+	 // Запрашивает ответ игрока с помощью prompt
+	 var getGuessLocal = prompt("Answer");
+	 return getGuessLocal;
+	};
+	var updateGameState = function (guess, word, answerArray) {
+	 // Обновляет answerArray согласно ответу игрока (guess)
+	 // возвращает число, обозначающее, сколько раз буква guess
+	 // встречается в слове, чтобы можно было обновить значение
+	 // remainingLetters
+	 //var count = 0;
+	 var updateGameStateLocal = {
+	 	count:0,
+	 	array:answerArray
+	 };
+	 for (var j =0;j<answerArray.length; j++){
+	 	if (word[j]===guess){
+	 		updateGameStateLocal.array[j] = guess;
+	 		updateGameStateLocal.count++;
+	 	}
+	 	
+	 }
+	 return updateGameStateLocal;
+	};
+	var showAnswerAndCongratulatePlayer = function (answerArray) {
+	 // С помощью alert показывает игроку отгаданное слово 
+	 // и поздравляет его с победой
+	 alert(answerArray.join(""));
+	 alert("Congratulations");
+	};
+ 	// word: загаданное слово
+ 	var wordArray = ["плюшка","сырник","почтальон","шайба"];
+	var word = pickWord(wordArray);
+	// answerArray: итоговый массив
+	var answerArray = setupAnswerArray(word);
+	// remainingLetters: сколько букв осталось угадать
+	var remainingLetters = word.length;
+	while (remainingLetters > 0) {
+	 showPlayerProgress(answerArray);
+	 // guess: ответ игрока
+	 var guess = getGuess(); 
+	 if (guess === null) {
+	 break;
+	 } else if (guess.length !== 1) {
+	 alert("Пожалуйста, введите одиночную букву.");
+	 } else {
+	 // correctGuesses: количество открытых букв
+	 var correctGuesses = updateGameState(guess, word, 
+	answerArray);
+	 answerArray = correctGuesses.array;
+	 remainingLetters -= correctGuesses.count;
+	}
+	}
+showAnswerAndCongratulatePlayer(answerArray);
+ </script>
+</body>
+</html>
