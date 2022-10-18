@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="UTF-8">
+ <title>Изучаем DOM</title>
+</head>
+<body>
+ <h1 id="main-heading">Привет, мир!</h1>
+ <!--<p> I am disappearing </p> -->
+ <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+ <script>
+ /*$("h1").fadeIn(3000); */
+ $("h1").text("My friends");
+ /*$("h1").fadeIn(3000);*/
+ var friends = ["Сергей","Антон","Кирилл","Алексей"];
+ for (var i=0;i<friends.length;i++){
+ 	$("body").append("<p>" +friends[i] + "</p>");
+ 	$("p").last().hide().delay(i*1000).fadeIn(1000); /* без hide ничего бы не было */
+ }
+ 
+ /*$("p").hide();
+ $("p").fadeIn(3000);*/
+ $("p").append(" best");
+ </script>
+</body>
+</html>
