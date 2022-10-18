@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="UTF-8">
+ <title>Mousemove</title>
+</head>
+<body>
+ <h1 id="heading">Привет, мир!</h1>
+ <script src="https://code.jquery.com/jquery-2.1.0.js"> 
+ </script>
+ <script>
+ var countX = 0;
+ var countY = 0;
+ var successClicks = 0;
+ var speed =33;
+ $("h1").text(successClicks);
+ var cicleH = function(){
+ 	if (countY ===0 && countX <200) {
+ 		countX++;
+ 	} else if (countX===200 && countY<200){
+ 		countY++;
+ 	} else if (countY ===200 && countX >0){
+ 		countX--;
+ 	} else if (countX===0 && countY >0){
+ 		countY--;
+ 	}
+ 	$("h1").offset({left:countX,top:countY});
+ }
+ var intervalId = setInterval(cicleH,speed);
+ $("h1").click(function clear(){
+ 	clearInterval(intervalId);
+ 	successClicks++;
+ 	if (successClicks>=10){
+ 		$("h1").text("YOU WIN!");
+ 	} else {
+ 		speed -=3;
+ 		intervalId = setInterval(cicleH,speed);
+ 		$("h1").text(successClicks);
+ 	}
+ });
+ </script>
+</body>
+</html>
