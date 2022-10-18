@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="UTF-8">
+ <title>Hangman</title>
+</head>
+<body>
+ <h1>Привет, мир!</h1>
+ <p>Моя первая веб-страничка.</p>
+ <script>
+ 	var areArraysSame = function (ar1,ar2){
+ 		if ( !(ar1.length===ar2.length) ){
+ 			return false;
+ 		} else{
+ 			for (var i=0;i<ar1.length;i++){
+ 				if ( !(ar1[i]===ar2[i]) ){
+ 					return false;
+ 				}
+ 			}
+ 		}
+ 		return true;
+ 	}
+ 	var ar1 = prompt("Array 1");
+ 	var ar2 = prompt("Array 2");
+ 	alert (areArraysSame(ar1,ar2));
+ </script>
+</body>
+</html>
