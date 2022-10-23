@@ -6,12 +6,86 @@
 </head>
 <body>
  <h1>Привет, мир!</h1>
- <p>Моя первая веб-страничка.</p>
+ <canvas id="canvas" width="400" height="400"></canvas>
+ <script src="https://code.jquery.com/jquery-2.1.0.js">
+</script>
  <script>
+ 	var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext("2d");
+		var drawCircle = function (x,y,radius,fill){
+			ctx.beginPath();
+			ctx.arc(x,y,radius,0,Math.PI*2,false);
+			if (fill){
+				ctx.fill();
+			} else {
+				ctx.stroke();
+			}
+		}
+		
+		var drawLine =function (x1,y1,x2,y2){
+			ctx.beginPath();
+			ctx.moveTo(x1,y1);
+			ctx.lineTo(x2,y2);
+			ctx.stroke();
+		}
+		var drawRect =function (x,y,a,b){
+			ctx.strokeRect(x,y,a,b);
+		}
+		var parts = [];
+		parts[0] = {
+			type:"line",
+			x1:0,
+			y1:250,
+			x2:50,
+			y2:175
+		}
+		parts[1] = {
+			type:"line",
+			x1:100,
+			y1:250,
+			x2:50,
+			y2:175
+		}
+		parts[2] = {
+			type:"line",
+			x1:50,
+			y1:175,
+			x2:50,
+			y2:50
+		}
+		parts[3] = {
+			type:"line",
+			x1:50,
+			y1:100,
+			x2:0,
+			y2:75
+		}
+		parts[4] = {
+			type:"line",
+			x1:50,
+			y1:100,
+			x2:100,
+			y2:75
+		}
+		parts[5] = {
+			type:"rect",
+			x:25,
+			y:0,
+			a:50,
+			b:50
+		}
+	var drawPart=function (parts){
+			if (parts.type==="line"){
+				drawLine(parts.x1,parts.y1,parts.x2,parts.y2);
+			}
+			if(parts.type==="rect"){
+				drawRect(parts.x,parts.y,parts.a,parts.b);
+			}
+	}
  	var word = ["плюшка","сырник","почтальон","шайба"];
  	var alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
  	var alphabetUp = alphabet.toUpperCase(alphabet);
- 	var attempts = 10;
+ 	var attempts = 0;
  	alphabet += alphabetUp;
  	var randomWord = word[Math.floor(Math.random()*word.length)];
  	alert(randomWord);
@@ -20,6 +94,7 @@
  	for (var i=0;i<randomWord.length;i++){
  		answerArray[i]= "_";
  	}
+ 	//drawPart(parts[0]);
  	//alert(answerArray.join());
  	var letter = "";
  	var remainingLetters = answerArray.length;
@@ -28,12 +103,13 @@
  		letter = prompt("Введите букву");
  		letter = letter.toLowerCase();
  		if(randomWord.indexOf(letter)===-1){
- 			--attempts;
- 			if (attempts===0){
+ 			attempts++;
+ 			drawPart(parts[attempts-1]);
+ 			if (attempts===parts.length+1){
  				alert("You Lose");
  				break;
  			} else{
- 			alert("attempts left " + attempts);
+ 			alert("attempts " + attempts);
  			}
  		}
  		if ( (letter.length ===1) && (alphabet.indexOf(letter)>=0) && (answerArray.indexOf(letter)===-1) ){
