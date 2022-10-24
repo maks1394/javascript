@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Ball</title>
+</head>
+<body>
+<canvas width="300" height="500" id="canvas"></canvas>
+<script type="text/javascript">
+	var htmlElement = document.getElementById("canvas");
+	var ctx = htmlElement.getContext("2d");
+	var width = htmlElement.width;
+	var height = htmlElement.height;
+	var colors = ["Red", "Orange", "Yellow", "Green", "Blue", "Purple"];
+	var pickRandomWord = function (arr){
+		return arr[Math.floor(Math.random()*arr.length)];
+	}
+	var drawCircle = function (x,y,radius,fill){
+		ctx.beginPath();
+		ctx.arc(x,y,radius,0,Math.PI*2,false);
+		if (fill){
+			ctx.fill();
+		}else {
+			ctx.stroke();
+		}
+	}
+	var randomSpeed = function (a,b) {
+		return (Math.floor(Math.random()*(b-a))+a);
+	}
+	var Ball = function (x,y){
+		this.x=x;
+		this.y=y;
+		this.speedx = randomSpeed (-5,5);
+		this.speedy = randomSpeed (-5,5);
+		this.color = pickRandomWord (colors);
+	}
+
+	Ball.prototype.draw = function (){
+		drawCircle(this.x,this.y,6,true);
+	}
+	
+	Ball.prototype.move = function(){
+		this.x += this.speedx;
+		this.y += this.speedy;
+		if ((this.x>width) || (this.x<0)) {
+			this.speedx = -this.speedx;
+		} 
+		if ((this.y>height) || (this.y<0)) {
+			this.speedy = -this.speedy;
+		}
+	}
+	var ball = new Ball (100,100);
+	var balls = [];
+	for (let i=0;i<10;i++) {
+		balls[i] = new Ball(100,100);
+	}
+	
+	//for (let i=0;i<10;i++){
+	setInterval(function(){
+		ctx.clearRect(0,0,width,height);
+		
+		for (let i=0;i<10;i++){
+		ctx.fillStyle = balls[i].color;
+		//console.log(balls[i].color)
+		balls[i].draw();
+		balls[i].move();
+		}
+		
+		
+		
+		//}	
+
+		ctx.strokeRect(0,0,width,height);
+	},30);
+	//}
+	
+</script>
+</body>
+</html>
